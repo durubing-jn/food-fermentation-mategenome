@@ -3,7 +3,9 @@
 ## 1. Raw data download
 
 ```sh
-fastq-dump ACCESSION_ID --split-files
+for i in $(cat ACCESSION_ID); do
+fastq-dump ${i} --split-files
+done
 ```
 
 ## 2. Quality control
