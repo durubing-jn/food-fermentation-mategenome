@@ -4,7 +4,7 @@
 
 ```sh
 #
-for i in $(cat data/ACCESSION_ID ); do
+for i in $(cat data/ACCESSION_ID); do
 fastq-dump ${i} --split-files
 done
 ```
@@ -13,12 +13,12 @@ done
 
 ```SH
 #pair-end metageomic sequencing
-for i in $(cat data/pair_end_sample_id ); do
+for i in $(cat data/pair_end_sample_id); do
 trim_galore -o 01.cleandata --gzip --paired 00.rawdata/${i}_1.fastq  00.rawdata/${i}_2.fastq
 done
 
 #single-end metageomic sequencing
-for i in $(cat data/single_end_sample_id ); do
+for i in $(cat data/single_end_sample_id); do
 trim_galore -o 01.cleandata --gzip 00.rawdata/${i}_1.fastq
 done
 
@@ -28,7 +28,7 @@ fastqc -t 24 -o 02.QC -f fastq 01.cleandata/${i}_1_val_1.fq.gz
 fastqc -t 24 -o 02.QC -f fastq 01.cleandata/${i}_2_val_2.fq.gz
 done
 
-for i in $(cat data/single_end_sample_id ); do
+for i in $(cat data/single_end_sample_id); do
 fastqc -t 24 -o 02.QC -f fastq 01.cleandata/${i}_trimmed_1.fastq.gz
 done
 ```
@@ -37,16 +37,16 @@ done
 
 ```sh
 #MEGAHIT, pair-end metageomic sequencing
-for in $(cat data/pair_end_sample_id ); do
+for in $(cat data/pair_end_sample_id); do
 megahit -1 01.cleandata/${i}_1_val_1.fq.gz -2 01.cleandata/${i}_2_val_2.fq.gz -t 30  -o 03.assmebly/00.assmebly_megahit/${i}
 done
 
 #MEGAHIT, single-end metageomic sequencing
-for i in $(cat data/single_end_sample_id ); do
+for i in $(cat data/single_end_sample_id); do
 megahit -r 01.cleandata/${i}_trimmed_1.fastq.gz -t 30  -o 03.assmebly/00.assmebly_megahit/${i}
 
 #metaspades, pair-end metageomic sequencing
-for in $(cat data/pair_end_sample_id ); do
+for in $(cat data/pair_end_sample_id); do
 metaspades.py --tmp-dir TEM_OUTPUT_FOLDER/${i}.tmp -t 30 -o 03.assmebly/01.assmebly_metspades/${i} -1 01.cleandata/${i}_1_val_1.fq.gz -2 01.cleandata/${i}_2_val_2.fq.gz
 done
 
@@ -70,7 +70,7 @@ done
 
 ####################Binning analysis based on metahit assmebly#############################
 #pair-end metageomic sequencing
-for in $(cat data/pair_end_sample_id ); do
+for in $(cat data/pair_end_sample_id); do
 mkdir 05.binning/metahit_bin/${i}
 bowtie2-build -f 04.assmebly_firlter/00.assembly_filter_results_megahit/${i}.fa --threads 10
 bowtie2 -1 01.cleandata/${i}_1_val_1.fq.gz -2 01.cleandata/${i}_2_val_2.fq.gz -p 10 -x 05.binning/metahit_bin/${i}/${i}_final -S 05.binning/metahit_bin/${i}/${i}_final.sam 2>0_SAM/${i}.bowtie2.stat
@@ -92,7 +92,7 @@ extract_fasta_bins.py 04.assmebly_firlter/00.assembly_filter_results_megahit/${i
 done
 
 #single-end metageomic sequencing
-for in $(cat data/single_end_sample_id ); do
+for in $(cat data/single_end_sample_id); do
 mkdir 05.binning/metahit_bin/${i}
 bowtie2-build -f 04.assmebly_firlter/00.assembly_filter_results_megahit/${i}.fa --threads 10
 bowtie2 -U 01.cleandata/${i}_trimmed_1.fastq.gz -p 10 -x 05.binning/metahit_bin/${i}/${i}_final -S 05.binning/metahit_bin/${i}/${i}_final.sam 2>0_SAM/${i}.bowtie2.stat
@@ -116,7 +116,7 @@ done
 
 ####################Binning analysis based on metaspades assmebly#############################
 #pair-end metageomic sequencing
-for in $(cat data/pair_end_sample_id ); do
+for in $(cat data/pair_end_sample_id); do
 mkdir 05.binning/metaspades_bin/${i}
 bowtie2-build -f 04.assmebly_firlter/01.assembly_filter_results_metspades/${i}.fa --threads 10
 bowtie2 -1 01.cleandata/${i}_1_val_1.fq.gz -2 01.cleandata/${i}_2_val_2.fq.gz -p 10 -x 05.binning/metaspades_bin/${i}/${i}_final -S 05.binning/metaspades_bin/${i}/${i}_final.sam 2>0_SAM/${i}.bowtie2.stat
@@ -138,7 +138,7 @@ extract_fasta_bins.py 04.assmebly_firlter/01.assembly_filter_results_metspades/$
 done
 
 #single-end metageomic sequencing
-for in $(cat data/single_end_sample_id ); do
+for in $(cat data/single_end_sample_id); do
 mkdir 05.binning/metaspades_bin/${i}
 bowtie2-build -f 04.assmebly_firlter/01.assembly_filter_results_metspades/${i}.fa --threads 10
 bowtie2 -U 01.cleandata/${i}_trimmed_1.fastq.gz -p 10 -x 05.binning/metaspades_bin/${i}/${i}_final -S 05.binning/metaspades_bin/${i}/${i}_final.sam 2>0_SAM/${i}.bowtie2.stat
