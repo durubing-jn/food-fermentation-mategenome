@@ -54,6 +54,8 @@ done
 for i in $(cat data/single_end_sample_id); do
 metaspades.py --tmp-dir TEM_OUTPUT_FOLDER/${i}.tmp -t 30 -o 03.assmebly/01.assmebly_metspades/${i} --s1 01.cleandata/${i}_trimmed_1.fastq.gz
 done
+
+#Co-assemble can be performed using MEGAHIT that is same with single sample assembly.
 ```
 
 ## 4. Binning
