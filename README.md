@@ -62,11 +62,11 @@ done
 
 ```sh
 #Filter contigs by length (1500 bp)
-for i in $(cat data/all_sampe_id); do
+for i in $(cat data/all_sample_id); do
 seqtk seq -L 1500 03.assmebly/00.assmebly_megahit/${i}/final.contigs.fa > 04.assmebly_firlter/00.assembly_filter_results_megahit/${i}.fa
 done
 
-for i in $(cat data/all_sampe_id); do
+for i in $(cat data/all_sample_id); do
 seqtk seq -L 1500 03.assmebly/01.assmebly_metspades/${i}/contigs.fasta > 04.assmebly_firlter/01.assembly_filter_results_metspades/${i}.fa
 done
 
