@@ -243,7 +243,7 @@ antismash 12.GTDB_tk/00.genome/${i}.fa --taxon bacteria --output-dir 13.SM_BGC/0
 done
 ```
 
-## 11. Bio-SCAPE
+## 11. BiG-SCAPE
 
 ```sh
 ##Preparing configuration Files
@@ -254,7 +254,7 @@ done
 python ./BiG-SCAPE-master/bigscape.py -i 13.SM_BGC/input_gbk -o output_bigscape --pfam_dir ./BiG-SCAPE-master/hmm -c 30 --cutoffs 0.7 --include_singletons --mode auto --mix --no_classify --mibig --verbose
 ```
 
-## 12. Bio-SLiCE
+## 12. BiG-SLiCE
 
 ```sh
 ##BiG-SLiCE clustering analysis, the input folder was prepared as previously reported (https://github.com/medema-group/bigslice)
